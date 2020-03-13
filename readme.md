@@ -1,99 +1,100 @@
-### 3d-Fractal-Tree
+# Wineforever.Coordinate 函数说明
 
-#### Introduction
+初始化：
+Wineforever.Coordinate.client.Initialization();
+可选参数：[AxisDim] 指示坐标系维度
+[isRelative] 指示是否使用相对坐标
+[isShowCoordinate] 指示是否绘制观察窗和坐标系
+[CustomSize] 传入一个矩形，指示观察窗的左上角和右下角坐标。例如:CustomSize = new float[] { 10, 10, 600, 400 }
 
-This project mainly introduces the image processing class library developed based on C# which can easily realize 3D image rendering, such as the 3D fractal tree.
+绘制点：
+Wineforever.Coordinate.client.DrawPoint(X, Y);
+可选参数: [brush] 选择画刷颜色
+[Size] 绘制点的大小
 
-I have made some sample programs in the **examples** folder. They show you the power of this library.
+绘制点集:
+Wineforever.Coordinate.client.DrawPoints(points);
+可选参数: [Color] 点颜色，例如"Red"
+[Size] 点尺寸，注:该值越大效率越低
 
-#### Examples
+绘制直线:
+Wineforever.Coordinate.client.DrawLine(W,b);
+Wineforever.Coordinate.client.DrawLine(X0,Y0,X1,Y1,[isExtend]);
+//设置直线是否延伸至画布边界
 
-- 3D Fractal Tree
+显示:
+PictureBox.Image = Wineforever.Coordinate.client.Show();
 
-  This fractal tree is based on string substitution algorithm. In order to facilitate real-time calculation, I only did one iteration.
+设置原点坐标:
+Wineforever.Coordinate.client.SetOriginalPoint(0,0); //默认原点坐标为(50,50)
 
-  ![](http://106.15.93.194/assets/3d-fractal-tree.gif)
+设置背景色:
+Wineforever.Coordinate.client.SetBackground(Brushes.White);
 
-- Julia Set
+三维坐标系 - 绘制点:
+Wineforever.Coordinate.client.DrawPoint(X, Y, Z);
+可选参数: [Color] 点颜色，例如"Red"
+[Size] 点尺寸，注:该值越大效率越低
 
-  This Julia set is based on time escape algorithm. I could have implemented it through the functions of the class library, but in order to pursue rendering efficiency, I chose to use the pointer operation bitmap method. For the functions of the class library, I only use the color rendering part.
+三维坐标系 - 绘制点集:
+Wineforever.Coordinate.client.DrawPoints(points);
+可选参数: [Color] 点颜色，例如"Red"
+[Size] 点尺寸，注:该值越大效率越低
+[Complex] 精细度，注:该值越大效率越低
+Wineforever.Coordinate.client.DrawPoints(points,colors);//绘制对应颜色的点集
 
-  ![](http://106.15.93.194/assets/Julia-set.png)
+三维坐标系 - 绘制圆:
+Wineforever.Coordinate.client.DrawCircle(X0, Y0, Z0, nX, nY, nZ, R, Brushes.Red);
+//（X,Y,Z）为圆心坐标,n为法线向量,R为半径
+可选参数: [Size] 指示圆周线条粗细
 
-- Background Denoising
+三维坐标系 - 绘制圆柱:
+Wineforever.Coordinate.client.DrawCylinder(X0, Y0, Z0, X1, Y1, Z1, R, Texture, Size, complex);
+//(X0,Y0,Z0):起始点坐标,（X1,Y1,Z1)：终止点坐标,R:圆柱半径,Texture:贴图,
+可选参数:[Size] 像素点粗细 
+[complex] 图像精细度
 
-  This uses a function to deal with background noise. In order to use, you must prepare a background image in advance, otherwise the program will throw an error. It will call your camera and capture the target object in front of the background. You can set the mask color for the background or the target object.
-  
-  ![](http://106.15.93.194/assets/background-denoising.gif)
-  
-- Text Segmentation
+三维坐标系 - 绘制圆台:
+Wineforever.Coordinate.client.DrawCylinder(X0, Y0, Z0, X1, Y1, Z1, R0, R1, Texture, Size, complex);
+//(X0,Y0,Z0):起始点坐标,（X1,Y1,Z1)：终止点坐标,R0:圆台起始半径,R1:圆台终止半径,Texture:贴图,
+可选参数:[Size] 像素点粗细 
+[complex] 图像精细度
 
-  You can also use it for text segmentation, which will make the preprocessing of text recognition very simple. It's more than that. You can detect objects in real time by using histogram statistical function and background filtering.
+三维坐标系 - 绘制矩形:
+Wineforever.Coordinate.client.DrawCylinder(X0, Y0, Z0, X1, Y1, Z1, nX,nY,nZ, Texture, Size, complex);
+//(X0,Y0,Z0):起始点坐标,（X1,Y1,Z1)：终止点坐标,(nX,nY,nZ):方向辅助点,Texture:贴图,
+可选参数:[Size] 像素点粗细 
+[complex] 图像精细度
 
-  ![](http://106.15.93.194/assets/text-segmentation.png)
+三维坐标系 - 渲染:(仅对于DrawPoints函数有效)
+Wineforever.Coordinate.client.Render();
+//在对坐标系进行调整之后，无需再次调用绘制点命令，只需Render()即可将原先的点全部渲染出来
+//例如:SetRotation(Value1, Value2, Value3);
+            Render();
+            drawbox.Image = Show();
 
-#### How to use
+三维坐标系 - 设置旋转角:
+Wineforever.Coordinate.client.SetRotation(180,144,214);
 
-Just like the general use of C# class library, you can learn about it by following these steps:
+三维坐标系 - 设置焦距:
+Wineforever.Coordinate.client.SetDistance(10);
 
-1. Put **Wineforever.Coordinate.dll** in the program root directory.
+三维坐标系 - 设置坐标轴长度:
+Wineforever.Coordinate.client.SetAxisLength(10);
 
-2. Read **Manual.txt** if necessary.
+清除屏幕：
+Wineforever.Coordinate.client.Clear();
 
-3. Import **Wineforever.Coordinate.dll** and reference namespace:
+曲线拟合:
+Wineforever.Coordinate.client.Fit(Points); 
+//本函数提供了多种重载方式，使用者可以根据自己需要选择直接绘制出拟合曲线或者返回某点的估计值。
+//采用的数学方法为拉格朗日插值定理。
 
-   ```C#
-   using Wineforever.Coordinate;
-   ```
-
-4. Initialization during program load:
-
-   ```C#
-   Wineforever.Coordinate.client.Initialization();
-   ```
-
-5. Do something...
-
-   ```C#
-   Wineforever.Coordinate.client.DrawPoint(3, 4);
-   ```
-
-6. Render:
-
-   ```C#
-   PictureBox.Image = Wineforever.Coordinate.client.Render();
-   ```
-
-The program provides 2D and 3D initialization methods. When drawing in 3D mode, all results will be programmed in 3D, so is 2D.
-
-Functions can be roughly divided into two categories: Draw and Handle. For a Draw function, it operates on the canvas. For Handle functions, it usually returns an Bitmap.
-
-#### Principle
-
-I will briefly describe the mathematical principles of some algorithms of this class library.
-
-For example, for the creation of a 3D coordinate system, it is based on one of the following matrices:
-
-![](http://106.15.93.194/assets/Mathematical-principle-of-3D-coordinate-system.png)
-
-The rotation matrix R I used in the program is based on Euler angle:
-
-![](http://106.15.93.194/assets/Euler-angle-matrix.png)
-
-You can also choose other rotation matrices.
-
-In the program, the drawing algorithm of the space circle is also implemented. As shown in the fractal tree, it is mainly based on the parameter equation of the space circle:
-
-![](http://106.15.93.194/assets/Circular-equation-of-space.png)
-
-Some other algorithms will not be explained here. because of their mathematical principles are simple.
-
-#### Agreement
-
-This class library follows the open source protocol and is allowed to be used commercially but the premise is that my class library must be specified in the source code.
-
-#### Donate
-
-If you want to sponsor me, you can scan the QR code below. Thank you for your support anyway.
-
-![](http://106.15.93.194/donate/donate.png)
+更新说明:
+(V1.1)修复了当点坐标值过大或过小时溢出的问题.
+(V2.0)修正了绘制直线坐标不正确的问题,并新增了两点式的直线绘制方法.
+(V2.0)新增了绘制三维坐标系的相关函数.
+(V2.1)新增了绘制点集的函数，提升效率.
+(V2.1)新增了Render函数，可以快速渲染三维点集.
+(V2.1)新增了相关函数，可以快速绘制立体圆周,空间圆柱,空间矩形.
+(V2.1)新增了设置背景色函数.
