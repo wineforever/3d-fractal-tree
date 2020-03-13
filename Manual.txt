@@ -1,0 +1,170 @@
+初始化：
+Wineforever.Coordinate.client.Initialization();
+可选参数：[model] 指示渲染模式,可选:"2d","3d"
+[isRelative] 指示是否使用相对坐标
+[isShowCoordinate] 指示是否绘制观察窗和坐标系
+[CustomSize] 传入一个矩形，指示观察窗的左上角和右下角坐标。例如:CustomSize = new float[] { 10, 10, 600, 400 }
+
+绘制点：
+Wineforever.Coordinate.client.DrawPoint(X, Y);
+可选参数: [brush] 选择画刷颜色
+[Size] 绘制点的大小
+
+绘制点集:
+Wineforever.Coordinate.client.DrawPoints(points,color);
+Wineforever.Coordinate.client.DrawPoints(points,colors);
+
+绘制直线:
+Wineforever.Coordinate.client.DrawLine(W,b);
+Wineforever.Coordinate.client.DrawLine(X0,Y0,X1,Y1,[isExtend]);
+//设置直线是否延伸至画布边界
+Wineforever.Coordinate.client.DrawLine(P0,P1);
+
+渲染:
+PictureBox.Image = Wineforever.Coordinate.client.Render();
+
+设置原点坐标:
+Wineforever.Coordinate.client.SetOriginalPoint(0,0); //默认原点坐标为(50,50)
+
+设置背景色:
+Wineforever.Coordinate.client.SetBackground(Brushes.White);
+
+三维坐标系 - 绘制点:
+Wineforever.Coordinate.client.DrawPoint(X, Y, Z);
+可选参数: [Color] 点颜色，例如"Red"
+[Size] 点尺寸，注:该值越大效率越低
+
+三维坐标系 - 绘制点集:
+Wineforever.Coordinate.client.DrawPoints(points,color);
+Wineforever.Coordinate.client.DrawPoints(points,colors);//绘制对应颜色的点集
+
+三维坐标系 - 绘制圆:
+Wineforever.Coordinate.client.DrawCircle(X0, Y0, Z0, nX, nY, nZ, R, Brushes.Red);
+//（X,Y,Z）为圆心坐标,n为法线向量,R为半径
+可选参数: [Size] 指示圆周线条粗细
+
+三维坐标系 - 绘制圆柱:
+Wineforever.Coordinate.client.DrawCylinder(X0, Y0, Z0, X1, Y1, Z1, R, Texture, Size, complex);
+//(X0,Y0,Z0):起始点坐标,（X1,Y1,Z1)：终止点坐标,R:圆柱半径,Texture:贴图,
+可选参数:[Size] 像素点粗细 
+[complex] 图像精细度
+
+三维坐标系 - 绘制圆台:
+Wineforever.Coordinate.client.DrawCylinder(X0, Y0, Z0, X1, Y1, Z1, R0, R1, Texture, Size, complex);
+//(X0,Y0,Z0):起始点坐标,（X1,Y1,Z1)：终止点坐标,R0:圆台起始半径,R1:圆台终止半径,Texture:贴图,
+可选参数:[Size] 像素点粗细 
+[complex] 图像精细度
+
+三维坐标系 - 绘制矩形:
+Wineforever.Coordinate.client.DrawCylinder(X0, Y0, Z0, X1, Y1, Z1, nX,nY,nZ, Texture, Size, complex);
+//(X0,Y0,Z0):起始点坐标,（X1,Y1,Z1)：终止点坐标,(nX,nY,nZ):方向辅助点,Texture:贴图,
+可选参数:[Size] 像素点粗细 
+[complex] 图像精细度
+
+三维坐标系 - 设置旋转角:
+Wineforever.Coordinate.client.SetRotation(180,144,214);
+
+三维坐标系 - 设置焦距:
+Wineforever.Coordinate.client.SetDistance(10);
+
+三维坐标系 - 设置坐标轴长度:
+Wineforever.Coordinate.client.SetAxisLength(10);
+
+清除屏幕：
+Wineforever.Coordinate.client.Clear();
+
+曲线拟合:
+Wineforever.Coordinate.client.Fit(Points); 
+//本函数提供了多种重载方式，使用者可以根据自己需要选择直接绘制出拟合曲线或者返回某点的估计值。
+//采用的数学方法为拉格朗日插值定理。
+
+绘制实时折线图:
+Wineforever.Coordinate.client.Plot(value);
+//折线图默认更新在Y轴左半轴 ，且初始化时会自动只显示Y轴左半轴图像。
+//可选参数:[color_name] 设置折线图颜色，不同颜色的折线图独立绘制。
+//[interval] 设置数据点X坐标间隔
+//[isShowPoint] 是否显示数据点
+//[isShowValue] 是否标注数据值
+//[isShowLine] 是否绘制折线
+//[PointSize] 设置点大小
+
+绘制直方图:
+Wineforever.Coordinate.client.Plot(values,Brushes.Red);
+//可选参数:[interval] 数据单元间隔
+//[isShowXValue] 是否显示X值
+//[isShowYValue] 是否显示Y值
+//[threshold] 设置阈值,当数据值超过阈值时，该单元会以红色显示。
+//该函数会返回一个Dictionary<int,double>类型的变量，该变量指示溢出单元对应的索引号和值。
+
+绘制字符串:
+Wineforever.Coordinate.client.DrawString(Point,Text,Brush); 
+
+彩虹色：
+Wineforever.Coordinate.client.ColorRainbow(Value, Min, Max);
+
+双色渐变:
+Wineforever.Coordinate.client.ColorFade(StartColor, EndColor, Value, Max);
+
+灰度处理:
+Wineforever.Coordinate.client.HandleGrey(bmp);
+
+二值化处理:
+Wineforever.Coordinate.client.HandleBinary(bmp);
+//该函数会自动对图像进行灰度处理。
+
+阈值分割:
+Wineforever.Coordinate.client.HandleThreshold(bmp,start_R,start_G,start_B,end_R,end_G,end_B);
+//对图像指定区间内的像素进行标注。
+//可选参数:[render_R] 渲染颜色的R值。
+//[render_G] 渲染颜色的G值。
+//[render_B] 渲染颜色的B值。
+
+平均图像:
+Wineforever.Coordinate.client.HandleAverage(bmps);
+
+像素直方:
+Wineforever.Coordinate.client.HandleHistogram(bmp);
+//可选参数:[direction] 可设置为"h"或"v",决定对图像进行直方统计的方向。
+//[RGB] 可设置为"R","B"或"G",或者三者的任意组合，决定参与统计的像素颜色。
+//该函数返回List<double>类型的统计结果。
+
+绘制直线:
+Wineforever.Coordinate.client.HandleDrawline(bmp,index);
+//对图像横或竖方向上从某一位置开始绘制一条蓝色标记线。
+//可选参数:[direction] 可设置为"h"或"v",决定直线方向。
+
+图片裁剪:
+Wineforever.Coordinate.client.HandleCut(bmp,X,Y,width,height);
+Wineforever.Coordinate.client.HandleCut_(bmp,X1,Y1,X2,Y2);
+
+图片缩放:
+Wineforever.Coordinate.client.HandleScale(bmp,width,height);
+
+背景遮罩:
+Wineforever.Coordinate.client.HandleMask(bmp,bg);
+//可选参数:[strength] 滤噪强度
+[mask_RGB_or_null] 遮罩颜色，可选为"R","G","B"或"null"
+[bg_RGB_or_null] 背景颜色，可选为"R","G","B"或"null"
+
+更新说明:
+(V1.1)修复了当点坐标值过大或过小时溢出的问题.
+(V2.0)修正了绘制直线坐标不正确的问题,并新增了两点式的直线绘制方法.
+(V2.0)新增了绘制三维坐标系的相关函数.
+(V2.1)新增了绘制点集的函数，提升效率.
+(V2.1)新增了Render函数，可以快速渲染三维点集.
+(V2.1)新增了相关函数，可以快速绘制立体圆周,空间圆柱,空间矩形.
+(V2.1)新增了设置背景色函数.
+(V2.1)新增了两种渐变颜色函数.
+(V3.0)删除了Render函数.（因为效率，兼容以及代码冗杂问题）
+(V3.0)修正了DrawPoints函数对越界点的渲染错误问题
+(V3.1)由于效率问题,删除DirectX相关函数.
+(V3.1)修正了移动坐标系时Y轴颠倒的问题.
+(V3.2)新增了DrawString函数，以及通过两个Point坐标绘制直线的DrawLine函数。
+(V4.0)把函数名Show替换为Render。
+(V4.0)为SetDistance函数提供了在二维模式下调整坐标系单位长度的方法。
+(V4.0)为SetDistance函数提供了isIncrement参数，若为True，则前项参数变为距离增量。
+(V4.0)删除了以Point数组为参数的Fit函数，并将参数类型Point修正为Point2D，并修正了Fit函数未进行坐标系转换的错误。
+(V4.0)新增了Plot函数，以实时绘制折线图。
+(V4.1)新增了DrawHistogram函数，以快速绘制直方图。并把原来的Plot（实时折线）函数名修正为DrawPlot。
+(V4.2)为SetRotation函数增加了微调模式。
+(V4.2)引入了大量图像处理函数。
