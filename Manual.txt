@@ -1,3 +1,26 @@
+========================
+新版类库（指5.0及以上版本）使用方法
+========================
+1，右键“工具箱”，单击“选择项”，在“.NET Framework 组件”选项卡中，单击“浏览”，导入类库DLL文件。
+（另法：如果上述操作出现错误提示，直接将DLL文件拖动到自定义控件栏中即可。）
+2，在窗体中拖入新增的“client”控件，可调整其“_RenderMod”属性变换为“2D”或“3D”渲染模式。
+3，调用：
+var Action = new Action(() => {
+                DrawVector(new Point2D(-30, -40), new Point2D(50, 60));//绘制向量
+            });//操作语句
+Wineforever.Coordinate.client.Render(() =>
+            {
+                Action();
+            });//进行渲染
+//Render函数可以在程序初始化（Load）时执行，而通过改变Action可以实时调整绘制内容。
+4，运行：
+（1）鼠标左键：变换视角。（仅支持3D模式）
+（2）鼠标右键：拖动坐标系。
+（3）滚轮：缩放。
+
+========================
+通用方法（兼容新版和旧版）
+========================
 初始化：
 Wineforever.Coordinate.client.Initialization();
 可选参数：[model] 指示渲染模式,可选:"2d","3d"
@@ -19,6 +42,12 @@ Wineforever.Coordinate.client.DrawLine(W,b);
 Wineforever.Coordinate.client.DrawLine(X0,Y0,X1,Y1,[isExtend]);
 //设置直线是否延伸至画布边界
 Wineforever.Coordinate.client.DrawLine(P0,P1);
+
+绘制向量:
+Wineforever.Coordinate.client.DrawVector(P0,P1,[theta],[length]);
+//若P0缺省，则默认P0为原点。
+//可选参数: [theta] 箭头展开的角度
+[length] 箭头拉伸的长度
 
 渲染:
 PictureBox.Image = Wineforever.Coordinate.client.Render();
@@ -166,5 +195,9 @@ Wineforever.Coordinate.client.HandleMask(bmp,bg);
 (V4.0)删除了以Point数组为参数的Fit函数，并将参数类型Point修正为Point2D，并修正了Fit函数未进行坐标系转换的错误。
 (V4.0)新增了Plot函数，以实时绘制折线图。
 (V4.1)新增了DrawHistogram函数，以快速绘制直方图。并把原来的Plot（实时折线）函数名修正为DrawPlot。
-(V4.2)为SetRotation函数增加了微调模式。
+(V4.2)为SetRotation，SetOriginalPoint函数增加了微调模式。
 (V4.2)引入了大量图像处理函数。
+(V5.0)把库封装成了自定义控件，现在只需引入控件即可快速绘图。
+(V5.0)修复了“2D”模式下，横纵坐标单位长度不一致的问题。
+(V5.0)新增了对复数运算的支持。
+(V5.0)新增了DrawVector函数，用以绘制向量。

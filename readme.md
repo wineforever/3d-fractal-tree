@@ -34,7 +34,38 @@ I have made some sample programs in the **examples** folder. They show you the p
 
 #### How to use
 
-Just like the general use of C# class library, you can learn about it by following these steps:
+In the new version, I integrate the class library as a control. Now it supports drag, rotate, and scale without additional code. e.g:
+
+1. Right click toolbox, click options, and in the .Net Framework Components tab, click Browse to import the class library DLL file.
+
+   (another way: if there is an error prompt for the above operation, drag the DLL file directly to the custom control bar.)
+
+2. Drag a new "client" control into the form to adjust its "_RenderMod"  attribute is transformed to 2D or 3D rendering mode.
+
+3. Call:
+
+```
+var Action = new Action(() => {
+                DrawVector(new Point2D(-30, -40), new Point2D(50, 60));//Draw vector
+            });//Operation statement
+            
+Wineforever.Coordinate.client.Render(() =>
+            {
+                Action();
+            });//Render
+
+//The render function can be executed when the program is initialized (load), and the painting content can be adjusted in real time by changing the action.
+```
+
+4. Operation:
+
+   (1) Left mouse button: change the perspective. (3D mode only)
+   (2) Right click: drag the coordinate system.
+   (3) Wheel: zoom.
+
+Old version usage (compatible):
+
+Also like the general use of C# class library, you can learn about it by following these steps:
 
 1. Put **Wineforever.Coordinate.dll** in the program root directory.
 
